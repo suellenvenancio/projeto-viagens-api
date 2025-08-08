@@ -17,7 +17,7 @@ import {
 } from "../schemas/user.schema"
 import { validate } from "../middleware/validate"
 
-export const authRoutes = () => {
+export function authRoutes() {
     const router = express.Router()
 
     router.post("/register", validate(registerSchema), registerUser)

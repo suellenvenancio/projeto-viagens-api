@@ -1,10 +1,13 @@
 import { authRoutes } from "./routes/auth.routes"
 import { userRoutes } from "./routes/user.routes"
+import { flightsRoutes } from "./routes/flights.routes"
+import { hotelsRoutes } from "./routes/hotels.routes"
+import { attractionsRoutes } from "./routes/attractions.routes"
 
 import { PrismaClient } from "./generated/prisma"
 
 import morgan from "morgan"
-import express, { Response } from "express"
+import express from "express"
 import cors from "cors"
 import helmet from "helmet"
 import errorMiddleware from "./middleware/error.middleware"
@@ -27,13 +30,6 @@ async function main() {
     app.use(cors(corsOptions))
     app.use(express.json())
 
-    app.get("/api/healthchecker", (_, res: Response) => {
-        res.status(200).json({
-            status: "success",
-            message: "Welcome to NodeJs with Prisma and PostgreSQL",
-        })
-    })
-
     app.listen(PORT, () => {
         console.log(`Servidor rodando em http://localhost:${PORT}`)
     })
@@ -41,7 +37,10 @@ async function main() {
     app.use(morgan("dev"))
 
     app.use(`/auth`, authRoutes())
-    app.use(`/user`, userRoutes())
+    app.use(`/me`, userRoutes())
+    app.use(`/flights`, flightsRoutes())
+    app.use(`/hotels`, hotelsRoutes())
+    app.use(`/attractions`, attractionsRoutes())
 
     app.use(errorMiddleware)
 }
