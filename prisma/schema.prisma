@@ -9,53 +9,52 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
+model Users {
   id String @id @default(uuid())
   name String
   email String @unique
   password String 
   createdAt DateTime @default(now())  
   updatedAt DateTime @updatedAt
-  refreshTokens RefreshToken[]  
-  flights Flight[]
-  hotels Hotel[]
-  attractions Attraction[]
+  flights Flights[]
+  hotels Hotels[]
+  attractions Attractions[]
+  sessions Sessions[]
 
   @@map("users")
 }
 
-model RefreshToken {
-  id         String   @id @default(uuid())
-  token      String
-  user       User     @relation(fields: [userId], references: [id])
-  userId     String
-  expiresAt  DateTime
-  createdAt  DateTime @default(now())
-  revoked    Boolean  @default(false)
-  
-  @@map("refresh_tokens")
-}
+model Sessions {
+  id        String   @id @default(uuid())
+  token     String   @unique 
+  user      Users     @relation(fields: [userId], references: [id])
+  userId    String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-model Attraction {
+  @@map("sessions")
+} 
+model Attractions {
   id    String      @id @default(uuid())
   name  String
   city  String
   price Float
-  user       User     @relation(fields: [userId], references: [id])
+  user       Users     @relation(fields: [userId], references: [id])
   userId     String
   visitDate DateTime @map("visit_date")
 
   @@map("attractions")
 }
 
-model Flight {
+model Flights {
   id            String       @id @default(uuid())
   airline       String
   flightNumber  String   @map("flight_number")
   origin        String
   destination   String
   userId     String
-  user       User     @relation(fields: [userId], references: [id]) 
+  user       Users     @relation(fields: [userId], references: [id]) 
   departureDate DateTime   @map("departure_date")
   arrivalDate   DateTime   @map("arrival_date")
   price         Float
@@ -63,7 +62,7 @@ model Flight {
   @@map("flights")
 }
 
-model Hotel {
+model Hotels {
   id      String     @id @default(uuid())
   name    String
   address String
@@ -71,7 +70,8 @@ model Hotel {
   checkOut DateTime @map("check_out")
   pricePerNight   Float
   userId     String
-  user       User     @relation(fields: [userId], references: [id]) 
+  user       Users     @relation(fields: [userId], references: [id]) 
 
   @@map("hotels")
 }
+

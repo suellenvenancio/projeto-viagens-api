@@ -1,12 +1,12 @@
 import { me } from "../controllers/user.controller"
 
 import express from "express"
-import { authCheck } from "../middleware/auth.middleware"
+import { validateSession } from "../middleware/auth.middleware"
 
 export function userRoutes() {
-    const router = express.Router()
+  const router = express.Router()
 
-    router.get("/", authCheck, me)
+  router.get("/", validateSession, me)
 
-    return router
+  return router
 }

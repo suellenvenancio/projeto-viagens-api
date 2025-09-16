@@ -1,22 +1,22 @@
 import {
-    createNewHotel,
-    deleteHotelById,
-    getHotelById,
-    getHotelsByUser,
-    updateHotelById,
+  createNewHotel,
+  deleteHotelById,
+  getHotelById,
+  getHotelsByUser,
+  updateHotelById,
 } from "../controllers/hotels.controller"
 import { authCheck } from "../middleware/auth.middleware"
 
 import express from "express"
 
 export function hotelsRoutes() {
-    const router = express.Router()
+  const router = express.Router()
 
-    router.get("/:id", authCheck, getHotelById)
-    router.post("/", authCheck, createNewHotel)
-    router.put("/:id", authCheck, updateHotelById)
-    router.delete("/:id", authCheck, deleteHotelById)
-    router.get("/user/:userId", getHotelsByUser)
+  router.get("/:id", getHotelById)
+  router.post("/", createNewHotel)
+  router.put("/:id", updateHotelById)
+  router.delete("/:id", deleteHotelById)
+  router.get("/user/:userId", getHotelsByUser)
 
-    return router
+  return router
 }
