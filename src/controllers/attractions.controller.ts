@@ -54,8 +54,6 @@ export const updateAttractionById = async (
   const attractionData = req.body
 
   try {
-    await findAttractionDB(attractionId)
-
     const updatedAttraction = await updateAttractionDB(
       attractionId,
       attractionData
@@ -78,7 +76,6 @@ export const deleteAttractionById = async (
   const { id } = req.params
 
   try {
-    await findAttractionDB(id)
     await deleteAttractionDB(id)
 
     return sendResponse(res, 200, "Attraction deleted successfully")

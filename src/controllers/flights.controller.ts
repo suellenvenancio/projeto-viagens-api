@@ -35,8 +35,6 @@ export const createNewFlight = async (
   const flightData = req.body
 
   try {
-    await findFlightByIdDB(flightData.id)
-
     const newFlight = await createFlightDB(flightData)
     return sendResponse(res, 201, "Flight created successfully", {
       data: newFlight,

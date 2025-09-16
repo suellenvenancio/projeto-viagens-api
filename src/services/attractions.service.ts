@@ -34,9 +34,9 @@ export const updateAttractionDB = async (
   attractionData: Partial<Attraction>
 ) => {
   try {
-    const attraction = await findAttractionDB(attractionId)
+    await findAttractionDB(attractionId)
     const updatedAttraction = await prisma.attractions.update({
-      where: { id: attraction.id },
+      where: { id: attractionId },
       data: attractionData,
     })
     return updatedAttraction
@@ -48,9 +48,9 @@ export const updateAttractionDB = async (
 
 export const deleteAttractionDB = async (attractionId: string) => {
   try {
-    const attraction = await findAttractionDB(attractionId)
+    await findAttractionDB(attractionId)
     await prisma.attractions.delete({
-      where: { id: attraction.id },
+      where: { id: attractionId },
     })
     return { message: "Attraction deleted successfully" }
   } catch (error) {
